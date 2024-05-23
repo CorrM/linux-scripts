@@ -102,6 +102,7 @@ xsetup_file="/usr/share/sddm/scripts/Xsetup"
 # Create a backup of the Xsetup file
 backup_file="$xsetup_file.bak"
 cp "$xsetup_file" "$backup_file"
+chmod 644 "$backup_file"
 echo "A backup of the original Xsetup file has been created at $backup_file"
 
 # Insert the xrandr command into the Xsetup file
@@ -114,5 +115,6 @@ awk -v cmd="$xrandr_command" -v turn_off="$turn_off_commands" '
 
 # Move the new file to replace the original
 mv "$xsetup_file.new" "$xsetup_file"
+chmod 755 "$xsetup_file"
 
 echo "The primary monitor has been set to $primary_monitor with resolution and refresh rate $res_rate, and other monitors have been turned off."
