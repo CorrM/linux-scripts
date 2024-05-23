@@ -27,7 +27,7 @@ fi
 if [[ ! -s /etc/sddm.conf ]]; then
     read -p "/etc/sddm.conf does not exist or is empty. Do you want to create example config? (y/n): " choice
     if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
-        sddm --example-config | sudo tee /etc/sddm.conf
+        sddm --example-config | tee /etc/sddm.conf
         if [[ $? -ne 0 ]]; then
             echo "Failed to create /etc/sddm.conf. Please create it manually."
             exit 1
@@ -35,6 +35,33 @@ if [[ ! -s /etc/sddm.conf ]]; then
     else
         echo "Please create /etc/sddm.conf to proceed."
         exit 1
+    fi
+fi
+
+# Check if the desktop session is plasma
+# https://wiki.archlinux.org/title/SDDM#Match_Plasma_display_configuration
+if [[ "$DESKTOP_SESSION" == "plasma" ]]; then
+    read -p "Detected Plasma session. Do you want to copy the display and input configuration for SDDM? (y/n): " choice
+    if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
+        # Copy kwinoutputconfig.json for display configuration
+        if [[ -f ~/.config/kwinoutputconfig.json ]]; then
+            cp ~/.config/kwinoutputconfig.json /var/lib/sddm/.config/
+            chown sddm:sddm /var/lib/sddm/.config/kwinoutputconfig.json
+            echo "Copied display configuration to SDDM."
+        else
+            echo "Display configuration file ~/.config/kwinoutputconfig.json not found."
+        fi
+
+        # Copy kcminputrc for input configuration
+        if [[ -f ~/.config/kcminputrc ]]; then
+            cp ~/.config/kcminputrc /var/lib/sddm/.config/
+            chown sddm:sddm /var/lib/sddm/.config/kcminputrc
+            echo "Copied input configuration to SDDM."
+        else
+            echo "Input configuration file ~/.config/kcminputrc not found."
+        fi
+
+        echo "You could need to open Plasma's System Settings and navigate to Startup and Shutdown> Login Screen (SDDM) and click \"Apply Plasma Settings...\""
     fi
 fi
 
