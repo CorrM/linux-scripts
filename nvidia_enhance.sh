@@ -76,6 +76,7 @@ do
         fi
       done
 
+      echo -e "\e[32mFor better performance, consider using a custom kernel such as Zen or Cachyos.\e[0m"
       echo "Performance maximization applied."
       break
       ;;
