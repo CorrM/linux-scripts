@@ -69,10 +69,10 @@ do
       # Check if the file exists and add options if they are not present
       for option in "${options[@]}"; do
         if grep -q "$option" "$conf_file" 2>/dev/null; then
-          echo "The option '$option' is already present in $conf_file."
+          echo "The option '$option' is already presented."
         else
           echo "$option" >> "$conf_file"
-          echo "Added the option '$option' to $conf_file."
+          echo "Added the option '$option'."
         fi
       done
 
