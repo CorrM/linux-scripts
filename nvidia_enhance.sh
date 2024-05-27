@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# References:
+# https://github.com/devonkinghorn/linux-nvidia-dynamic-power-management-setup
+# https://www.reddit.com/r/hyprland/comments/1bjlije/comment/kvvdwot/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+# https://www.youtube.com/watch?v=BH2Chn9N0z8
+
 # Check if the script is running as root
 if [ "$EUID" -ne 0 ]; then
   echo "Please run as root."
@@ -16,7 +21,7 @@ if ! lspci | grep -i nvidia > /dev/null; then
 fi
 
 PS3='Please enter your choice: '
-options=("Fix resume from suspend" "Quit")
+options=("Fix resume from suspend" "Maximize performance" "Quit")
 select opt in "${options[@]}"
 do
   case $opt in
@@ -46,6 +51,32 @@ do
       systemctl enable nvidia-resume.service
 
       echo "Resume from suspend fix applied."
+      break
+      ;;
+    "Maximize performance")
+      echo "Maximizing performance..."
+
+      # File path
+      conf_file="/etc/modprobe.d/nvidia.conf"
+      options=(
+        "options nvidia NVreg_UsePageAttributeTable=1"
+        "options nvidia NVreg_InitializeSystemMemoryAllocations=0"
+        "options nvidia NVreg_DynamicPowerManagement=0x02"
+        "options nvidia NVreg_EnableGpuFirmware=0"
+        "options nvidia_drm modeset=1 fbdev=1"
+      )
+
+      # Check if the file exists and add options if they are not present
+      for option in "${options[@]}"; do
+        if grep -q "$option" "$conf_file" 2>/dev/null; then
+          echo "The option '$option' is already present in $conf_file."
+        else
+          echo "$option" >> "$conf_file"
+          echo "Added the option '$option' to $conf_file."
+        fi
+      done
+
+      echo "Performance maximization applied."
       break
       ;;
     "Quit")
