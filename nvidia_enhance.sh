@@ -63,7 +63,8 @@ do
         "options nvidia NVreg_InitializeSystemMemoryAllocations=0"
         "options nvidia NVreg_DynamicPowerManagement=0x02"
         "options nvidia NVreg_EnableGpuFirmware=0"
-        "options nvidia_drm modeset=1 fbdev=1"
+        "options nvidia_drm modeset=1"
+        "options nvidia_drm fbdev=1"
       )
 
       # Check if the file exists and add options if they are not present
@@ -75,6 +76,8 @@ do
           echo "Added the option '$option'."
         fi
       done
+
+      mkinitcpio -P
 
       echo -e "\e[32mFor better performance, consider using a custom kernel such as Zen or Cachyos.\e[0m"
       echo "Performance maximization applied."
