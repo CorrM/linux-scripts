@@ -1,8 +1,10 @@
 # linux-scripts
 
 TODO:
-- Add script for parrallel `pacman` and `PKGBUILD`
-  - `/etc/pacman.conf` for `pacman`
-  - `/etc/makepkg.conf` for `PKGBUILD`
+- Add script for `pacman`(`/etc/pacman.conf`) and `PKGBUILD`(`/etc/makepkg.conf`)
+  - `pacman` add parallel
+  - `pacman` add colors
+  - `PKGBUILD` add parallel
+  - 
 - Add script for KDE
   - Reset KDE Plasma
