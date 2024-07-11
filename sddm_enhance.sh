@@ -1,8 +1,14 @@
 #!/bin/bash
 
-# Check for root permissions
-if [[ $EUID -ne 0 ]]; then
-    echo "This script requires root privileges to run. Please run it with sudo."
+# Check if the script is running as root
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run as root."
+  exit 1
+fi
+
+# Check if xrandr command is available
+if ! command -v xrandr &> /dev/null; then
+    echo "Error: xrandr command not found. Make sure xrandr is installed. You can install by \`sudo pacman -S xorg-xrandr\`" >&2
     exit 1
 fi
 

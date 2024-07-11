@@ -2,7 +2,7 @@
 
 # Check if amixer command is available
 if ! command -v amixer &> /dev/null; then
-    echo "Error: amixer command not found. Make sure ALSA is installed." >&2
+    echo "Error: amixer command not found. Make sure ALSA is installed. You can install by \`sudo pacman -S alsa-lib alsa-utils\`" >&2
     exit 1
 fi
 
@@ -19,7 +19,7 @@ fi
 for card in $cards; do
     # Check if the 'Auto-Mute Mode' control exists for the current card
     if ! amixer -c $card scontrols | grep -q 'Auto-Mute Mode'; then
-        echo -e "card ${card}: Auto-Mute Mode control \033[0;31mnot found\033[0m" >&2
+        echo -e "card ${card}: Auto-Mute Mode control \033[0;31m'NOT found'\033[0m" >&2
         continue
     fi
 
