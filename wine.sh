@@ -2,6 +2,9 @@
 
 # References:
 # https://forum.winehq.org/viewtopic.php?t=36871
+# https://www.reddit.com/r/linux4noobs/comments/firqs9/getting_windows_wpf_applications_to_run_with_wine/
+# https://www.winehq.org/pipermail/wine-bugs/2020-April/534007.html
+# https://github.com/Winetricks/winetricks/issues/2051
 
 # Check if wine is installed
 if ! command -v wine &> /dev/null; then
@@ -47,7 +50,13 @@ select opt in "${options[@]}"; do
 
     "Install dotnet48 and d3dcompiler_47")
         echo "Install dotnet48 and d3dcompiler_47..."
+
+        winetricks remove_mono
         winetricks -q dotnet48 d3dcompiler_47
+
+        # Workaround for WPF https://github.com/Winetricks/winetricks/issues/2051
+        wine reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Avalon.Graphics" /v DisableHWAcceleration /t REG_DWORD /d 1 /f
+
         break
       ;;
 
