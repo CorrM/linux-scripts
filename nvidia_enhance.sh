@@ -20,10 +20,8 @@ if ! lspci | grep -i nvidia > /dev/null; then
   esac
 fi
 
-PS3='Please enter your choice: '
 options=("Fix resume from suspend" "Maximize performance" "Quit")
-select opt in "${options[@]}"
-do
+select opt in "${options[@]}"; do
   case $opt in
     "Fix resume from suspend")
       echo "Fixing resume from suspend..."
