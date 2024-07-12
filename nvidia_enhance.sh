@@ -51,6 +51,7 @@ select opt in "${options[@]}"; do
       echo "Resume from suspend fix applied."
       break
       ;;
+
     "Maximize performance")
       echo "Maximizing performance..."
 
@@ -81,6 +82,7 @@ select opt in "${options[@]}"; do
       echo "Performance maximization applied."
       break
       ;;
+
     "Quit")
       echo "Exiting."
       break
