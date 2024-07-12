@@ -45,6 +45,9 @@ select opt in "${options[@]}"; do
       unzip wine-tkg-build.zip
       yay -U wine-tkg-*.pkg.tar.zst
 
+      # Delete cache
+      rm -rf wine-cache
+
       break
     ;;
 
