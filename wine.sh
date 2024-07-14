@@ -49,18 +49,18 @@ select opt in "${options[@]}"; do
       rm -rf wine-cache
 
       break
-    ;;
+      ;;
 
     "Install dotnet48 and d3dcompiler_47 for default prefix")
-        echo "Install dotnet48 and d3dcompiler_47..."
+      echo "Install dotnet48 and d3dcompiler_47..."
 
-        winetricks remove_mono
-        winetricks -q dotnet48 d3dcompiler_47
+      winetricks remove_mono
+      winetricks -q dotnet48 d3dcompiler_47
 
-        # Workaround for WPF https://github.com/Winetricks/winetricks/issues/2051
-        wine reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Avalon.Graphics" /v DisableHWAcceleration /t REG_DWORD /d 1 /f
+      # Workaround for WPF https://github.com/Winetricks/winetricks/issues/2051
+      wine reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Avalon.Graphics" /v DisableHWAcceleration /t REG_DWORD /d 1 /f
 
-        break
+      break
       ;;
 
     "Delete default prefix")
@@ -72,12 +72,13 @@ select opt in "${options[@]}"; do
       else
         echo "Aborted."
       fi
+
       break
       ;;
 
-      "Quit")
-        echo "Exiting."
-        break
+    "Quit")
+      echo "Exiting."
+      break
       ;;
     *) echo "Invalid option $REPLY";;
   esac
