@@ -24,7 +24,7 @@ if ! command -v yay --version &> /dev/null; then
   exit 1
 fi
 
-options=("Install wine-tkg" "Install dotnet48 and d3dcompiler_47" "Delete default prefix" "Quit")
+options=("Install wine-tkg" "Install dotnet48 and d3dcompiler_47 for default prefix" "Delete default prefix" "Quit")
 select opt in "${options[@]}"; do
   case $opt in
     "Install wine-tkg")
@@ -51,7 +51,7 @@ select opt in "${options[@]}"; do
       break
     ;;
 
-    "Install dotnet48 and d3dcompiler_47")
+    "Install dotnet48 and d3dcompiler_47 for default prefix")
         echo "Install dotnet48 and d3dcompiler_47..."
 
         winetricks remove_mono
