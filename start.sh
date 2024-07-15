@@ -21,10 +21,10 @@ options=(
     "Sound Utils"
     "SDDM Utils"
     "KDE Plasma Utils"
-    "VMWare Utils"
     "NVIDIA Utils"
-    "Gaming Utils"
+    "VMWare Utils"
     "Wine Utils"
+    "Gaming Utils"
     "Steam Utils"
     "Quit"
 )
@@ -40,10 +40,10 @@ main_menu() {
             1) sound_menu ;;
             2) sddm_menu ;;
             3) kde_plasma_menu ;;
-            4) vmware_menu ;;
-            5) nvidia_menu ;;
-            6) gaming_menu ;;
-            7) wine_menu ;;
+            4) nvidia_menu ;;
+            5) vmware_menu ;;
+            6) wine_menu ;;
+            7) gaming_menu ;;
             8) steam_menu ;;
             ${#options[@]}) print_color "$YELLOW" "Thank you for using the CorrM Utils Tool. Goodbye!"; exit 0 ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
