@@ -3,6 +3,7 @@
 # References:
 # https://www.reddit.com/r/vmware/comments/1d2hzvs/unable_to_install_all_modules_error_while/
 # https://github.com/nan0desu/vmware-host-modules/wiki
+# https://gist.github.com/ddan9/daa3c1d3bce0eb879cd711d144712206
 
 # Menu function
 vmware_menu() {
