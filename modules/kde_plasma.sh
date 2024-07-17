@@ -14,17 +14,35 @@ kde_plasma_menu() {
         choice=$?
 
         case $choice in
-            1)
-                kwriteconfig6 --file ~/.config/plasmarc --group PlasmaToolTips --key Delay 1
-                print_color "$GREEN" "Fast window preview enabled."
-                ;;
-            2)
-                sudo localectl set-locale LANG=en_GB.UTF-8
-                print_color "$GREEN" "Locale set to en_GB.UTF-8."
-                ;;
+            1) kde_plasma_fast_window_preview ;;
+            2) kde_plasma_fix_locale ;;
+            3) kde_plasma_reset ;;
             ${#options[@]}) return 0 ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
         pause
     done
+}
+
+kde_plasma_fast_window_preview() {
+    kwriteconfig6 --file ~/.config/plasmarc --group PlasmaToolTips --key Delay 1
+    print_color "$GREEN" "Fast window preview enabled."
+}
+
+kde_plasma_fix_locale() {
+    sudo localectl set-locale LANG=en_GB.UTF-8
+    print_color "$GREEN" "Locale set to en_GB.UTF-8."
+}
+
+kde_plasma_reset() {
+    print_color "$CYAN" "Are you sure you want to reset KDE Plasma? (y/n)"
+    read -r confirmation
+
+    if [ "$confirmation" = "y" ]; then
+        echo "Deleting..."
+        rm ~/.config/plasma-org.kde.plasma.desktop-appletsrc
+        rm ~/.config/plasmashellrc
+    else
+        echo "Aborted."
+    fi
 }
