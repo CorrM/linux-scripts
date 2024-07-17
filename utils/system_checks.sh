@@ -8,6 +8,15 @@ check_root() {
     fi
 }
 
+# Check if pacman is installed
+check_pacman() {
+    if ! command -v pacman --version &> /dev/null; then
+        print_color "$RED" "Error: pacman command not found. Make sure pacman is installed."
+        return 1
+    fi
+    return 0
+}
+
 # Check if SDDM is the display manager
 check_sddm() {
     if [[ $(systemctl is-active sddm.service) != "active" ]]; then

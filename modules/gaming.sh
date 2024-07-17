@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Reference:
+# https://wiki.archlinux.org/title/Gamemode
+# https://wiki.archlinux.org/title/MangoHud
+
 gaming_menu() {
     check_root
 

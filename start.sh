@@ -7,6 +7,8 @@ source "$(dirname "$0")/utils/menu.sh"
 source "$(dirname "$0")/utils/system_checks.sh"
 
 # Source module scripts
+source "$(dirname "$0")/modules/pacman.sh"
+source "$(dirname "$0")/modules/pkgbuild.sh"
 source "$(dirname "$0")/modules/sound.sh"
 source "$(dirname "$0")/modules/sddm.sh"
 source "$(dirname "$0")/modules/kde_plasma.sh"
@@ -18,6 +20,8 @@ source "$(dirname "$0")/modules/steam.sh"
 
 # Main menu options
 options=(
+    "Pacman Utils"
+    "PKGBUILD Utils"
     "Sound Utils"
     "SDDM Utils"
     "KDE Plasma Utils"
@@ -37,14 +41,16 @@ main_menu() {
         choice=$?
 
         case $choice in
-            1) sound_menu ;;
-            2) sddm_menu ;;
-            3) kde_plasma_menu ;;
-            4) nvidia_menu ;;
-            5) vmware_menu ;;
-            6) wine_menu ;;
-            7) gaming_menu ;;
-            8) steam_menu ;;
+            1) pacman_menu ;;
+            2) pkgbuild_menu ;;
+            3) sound_menu ;;
+            4) sddm_menu ;;
+            5) kde_plasma_menu ;;
+            6) nvidia_menu ;;
+            7) vmware_menu ;;
+            8) wine_menu ;;
+            9) gaming_menu ;;
+            10) steam_menu ;;
             ${#options[@]}) print_color "$YELLOW" "Thank you for using the CorrM Utils Tool. Goodbye!"; exit 0 ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
