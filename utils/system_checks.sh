@@ -8,15 +8,6 @@ check_root() {
     fi
 }
 
-# Check if pacman is installed
-check_pacman() {
-    if ! command -v pacman --version &> /dev/null; then
-        print_color "$RED" "Error: pacman command not found. Make sure pacman is installed."
-        return 1
-    fi
-    return 0
-}
-
 # Check if SDDM is the display manager
 check_sddm() {
     if [[ $(systemctl is-active sddm.service) != "active" ]]; then
@@ -58,55 +49,77 @@ check_x11() {
     return 0
 }
 
+# Check if command is exists
+check_command() {
+    local name=$1
+    local command=$2
+
+    if ! command -v $command &> /dev/null; then
+        return 1
+    fi
+
+    return 0
+}
+
+check_command_with_error() {
+    local name=$1
+    local command=$2
+
+    check_command "$name" "$command"
+    local command_found=$?
+
+    if [ $command_found -ne 0 ]; then
+        if [ -n "$3" ]; then
+            local install_command=$3
+            print_color "$RED" "Error: $command command not found. Make sure $name is installed. You can install by \`$install_command\`"
+        else
+            print_color "$RED" "Error: $command command not found. Make sure $name is installed."
+        fi
+
+        return 1
+    fi
+
+    return 0
+}
+
+# Check if pacman is installed
+check_pacman() {
+    check_command_with_error "pacman" "pacman --version"
+    return $?
+}
+
 # Check if yay is installed
 check_yay() {
-    if ! command -v yay &> /dev/null; then
-        print_color "$RED" "yay could not be found. Please install yay."
-        exit 1
-    fi
+    check_command_with_error "yay" "yay --version"
+    return $?
 }
 
 # Check if git is installed
 check_git() {
-    if ! command -v git -v &> /dev/null; then
-        print_color "$RED" "git could not be found. Please install git."
-        return 1
-    fi
-    return 0
+    check_command_with_error "git" "git -v"
+    return $?
 }
 
 # Check if xrandr command is available
 check_xrandr() {
-    if ! command -v xrandr &> /dev/null; then
-        print_color "$RED" "Error: xrandr command not found. Make sure xrandr is installed. You can install by \`sudo pacman -S xorg-xrandr\`"
-        return 1
-    fi
-    return 0
+    check_command_with_error "xrandr" "xrandr" "pacman -S xorg-xrandr"
+    return $?
 }
 
 # Check if ALSA is installed
 check_alsa() {
-    if ! command -v amixer &> /dev/null; then
-        print_color "$RED" "amixer could not be found. Please install ALSA. You can install by \`sudo pacman -S alsa-lib alsa-utils\`"
-        return 1
-    fi
-    return 0
+    check_command_with_error "ALSA" "amixer" "pacman -S alsa-lib alsa-utils"
+    return $?
 }
 
 # Check if wine is installed
 check_wine() {
-    if ! command -v wine &> /dev/null; then
-        print_color "$RED" "wine could not be found. Please install wine."
-        return 1
-    fi
-    return 0
+    check_command_with_error "wine" "wine"
+    return $?
 }
 
 # Check if winetricks is installed
 check_winetricks() {
-    if ! command -v winetricks &> /dev/null; then
-        print_color "$RED" "winetricks could not be found. Please install winetricks."
-        return 1
-    fi
-    return 0
+    check_command_with_error "winetricks" "winetricks"
+    return $?
 }

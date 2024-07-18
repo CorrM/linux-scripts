@@ -4,6 +4,8 @@
 # https://wiki.archlinux.org/title/Gamemode
 # https://wiki.archlinux.org/title/MangoHud
 
+# For NVidia Install cachyOS kernel with that video https://www.youtube.com/watch?v=_FqQ8MCWFlU, then use that video to install GPU drivers https://www.youtube.com/watch?v=0tu1-M_qJos
+
 gaming_menu() {
     check_root
 
