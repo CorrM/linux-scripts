@@ -14,6 +14,7 @@ source "$(dirname "$0")/modules/sound.sh"
 source "$(dirname "$0")/modules/sddm.sh"
 source "$(dirname "$0")/modules/kde_plasma.sh"
 source "$(dirname "$0")/modules/vmware.sh"
+source "$(dirname "$0")/modules/cpu.sh"
 source "$(dirname "$0")/modules/nvidia.sh"
 source "$(dirname "$0")/modules/gaming.sh"
 source "$(dirname "$0")/modules/wine.sh"
@@ -27,6 +28,7 @@ options=(
     "Sound Utils"
     "SDDM Utils"
     "KDE Plasma Utils"
+    "CPU Utils"
     "NVIDIA Utils"
     "VMWare Utils"
     "Wine Utils"
@@ -49,11 +51,12 @@ main_menu() {
             4) sound_menu ;;
             5) sddm_menu ;;
             6) kde_plasma_menu ;;
-            7) nvidia_menu ;;
-            8) vmware_menu ;;
-            9) wine_menu ;;
-            10) gaming_menu ;;
-            11) steam_menu ;;
+            7) cpu_menu ;;
+            8) nvidia_menu ;;
+            9) vmware_menu ;;
+            10) wine_menu ;;
+            11) gaming_menu ;;
+            12) steam_menu ;;
             ${#options[@]}) print_color "$YELLOW" "Thank you for using the CorrM Utils Tool. Goodbye!"; exit 0 ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac

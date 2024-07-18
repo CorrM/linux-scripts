@@ -77,5 +77,5 @@ nvidia_maximize_performance() {
     mkinitcpio -P
 
     print_color "$GREEN" "Performance maximization applied."
-    print_color "$YELLOW" "For better performance, consider using a custom kernel such as Zen or Cachyos."
+    print_color "$YELLOW" "For better performance, consider using a custom kernel such as Zen or CachyOs."
 }
