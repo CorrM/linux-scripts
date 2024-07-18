@@ -12,8 +12,8 @@ cpu_menu() {
         choice=$?
 
         case $choice in
+            0) return 0 ;;
             1) cpu_enable_pstate ;;
-            ${#options[@]}) return 0 ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
 

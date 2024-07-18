@@ -8,8 +8,8 @@ steam_menu() {
         choice=$?
 
         case $choice in
+            0) return 0 ;;
             1) steam_fix_mimetype ;;
-            ${#options[@]}) return 0 ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
         pause

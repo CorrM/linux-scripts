@@ -12,8 +12,8 @@ sound_menu() {
         choice=$?
 
         case $choice in
+            0) return 0 ;;
             1) sound_unmute_all_audio_cards ;;
-            ${#options[@]}) return 0 ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
         pause

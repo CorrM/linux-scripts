@@ -17,9 +17,9 @@ nvidia_menu() {
         choice=$?
 
         case $choice in
+            0) return 0 ;;
             1) nvidia_fix_resume_from_suspend ;;
             2) nvidia_maximize_performance ;;
-            ${#options[@]}) return 0 ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
 

@@ -12,9 +12,9 @@ pacman_menu() {
         choice=$?
 
         case $choice in
+            0) return 0 ;;
             1) pacman_update_parallel_downloads ;;
             2) pacman_update_color_setting ;;
-            ${#options[@]}) return 0 ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
 

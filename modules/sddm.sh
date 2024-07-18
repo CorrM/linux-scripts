@@ -9,58 +9,30 @@ sddm_menu() {
         return 1
     fi
 
-    sddm_configure_sddm
+    local options=("Create default configuration" "Configure primary monitor" "Copy plasma config" "Back to main menu")
+    while true; do
+        show_menu "SDDM Utils" "Utilities for SDDM" "${options[@]}"
+        choice=$?
 
-    return 0
+        case $choice in
+            0) return 0 ;;
+            1) sddm_default_configuration ;;
+            2) sddm_configure_primary_monitor ;;
+            3) sddm_copy_plasma_config ;;
+            *) print_color "$RED" "Invalid option. Please try again." ;;
+        esac
+        pause
+    done
 }
 
-sddm_configure_sddm() {
-    # Check if /etc/sddm.conf exists and is not empty
-    if [[ ! -s /etc/sddm.conf ]]; then
-        read -p "/etc/sddm.conf does not exist or is empty. Do you want to create example config? (y/n): " choice
-        if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
-            sddm --example-config | tee /etc/sddm.conf
-            if [[ $? -ne 0 ]]; then
-                print_color "$RED" "Failed to create /etc/sddm.conf. Please create it manually."
-                return
-            fi
-        else
-            print_color "$RED" "Please create /etc/sddm.conf to proceed."
-            return
-        fi
+sddm_default_configuration() {
+    sddm --example-config | tee /etc/sddm.conf
+    if [[ $? -ne 0 ]]; then
+        print_color "$RED" "Failed to create '/etc/sddm.conf'."
+        return 1
     fi
 
-    # Check if the desktop session is plasma
-    if [[ "$DESKTOP_SESSION" == "plasma" ]]; then
-        read -p "Detected Plasma session. Do you want to copy the display and input configuration for SDDM? (y/n): " choice
-        if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
-            sddm_copy_plasma_config
-        fi
-    fi
-
-    sddm_configure_primary_monitor
-}
-
-sddm_copy_plasma_config() {
-    # Copy kwinoutputconfig.json for display configuration
-    if [[ -f ~/.config/kwinoutputconfig.json ]]; then
-        cp ~/.config/kwinoutputconfig.json /var/lib/sddm/.config/
-        chown sddm:sddm /var/lib/sddm/.config/kwinoutputconfig.json
-        print_color "$GREEN" "Copied display configuration to SDDM."
-    else
-        print_color "$YELLOW" "Display configuration file ~/.config/kwinoutputconfig.json not found."
-    fi
-
-    # Copy kcminputrc for input configuration
-    if [[ -f ~/.config/kcminputrc ]]; then
-        cp ~/.config/kcminputrc /var/lib/sddm/.config/
-        chown sddm:sddm /var/lib/sddm/.config/kcminputrc
-        print_color "$GREEN" "Copied input configuration to SDDM."
-    else
-        print_color "$YELLOW" "Input configuration file ~/.config/kcminputrc not found."
-    fi
-
-    print_color "$YELLOW" "You may need to open Plasma's System Settings and navigate to Startup and Shutdown > Login Screen (SDDM) and click \"Apply Plasma Settings...\""
+    print_color "$GREEN" "'/etc/sddm.conf' successfully created."
 }
 
 sddm_configure_primary_monitor() {
@@ -141,4 +113,26 @@ sddm_configure_primary_monitor() {
     chmod 755 "$xsetup_file"
 
     print_color "$GREEN" "The primary monitor has been set to $primary_monitor with resolution and refresh rate $res_rate, and other monitors have been turned off."
+}
+
+sddm_copy_plasma_config() {
+    # Copy kwinoutputconfig.json for display configuration
+    if [[ -f ~/.config/kwinoutputconfig.json ]]; then
+        cp ~/.config/kwinoutputconfig.json /var/lib/sddm/.config/
+        chown sddm:sddm /var/lib/sddm/.config/kwinoutputconfig.json
+        print_color "$GREEN" "Copied display configuration to SDDM."
+    else
+        print_color "$YELLOW" "Display configuration file ~/.config/kwinoutputconfig.json not found."
+    fi
+
+    # Copy kcminputrc for input configuration
+    if [[ -f ~/.config/kcminputrc ]]; then
+        cp ~/.config/kcminputrc /var/lib/sddm/.config/
+        chown sddm:sddm /var/lib/sddm/.config/kcminputrc
+        print_color "$GREEN" "Copied input configuration to SDDM."
+    else
+        print_color "$YELLOW" "Input configuration file ~/.config/kcminputrc not found."
+    fi
+
+    print_color "$YELLOW" "You may need to open Plasma's System Settings and navigate to Startup and Shutdown > Login Screen (SDDM) and click \"Apply Plasma Settings...\""
 }

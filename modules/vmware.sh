@@ -18,11 +18,11 @@ vmware_menu() {
         choice=$?
 
         case $choice in
+            0) return 0 ;;
             1) vmware_install_vmware ;;
             2) vmware_patch ;;
             3) vmware_add_dkms ;;
             4) vmware_clean_patch_cache ;;
-            ${#options[@]}) return 0 ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
         pause

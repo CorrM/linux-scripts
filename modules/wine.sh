@@ -19,10 +19,10 @@ wine_menu() {
         choice=$?
 
         case $choice in
+            0) return 0 ;;
             1) wine_install_wine_tkg ;;
             2) wine_fix_wpf_applications ;;
             3) wine_delete_default_prefix ;;
-            ${#options[@]}) return 0 ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
         pause

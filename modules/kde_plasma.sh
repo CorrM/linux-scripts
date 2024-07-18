@@ -14,10 +14,10 @@ kde_plasma_menu() {
         choice=$?
 
         case $choice in
+            0) return 0 ;;
             1) kde_plasma_fast_window_preview ;;
             2) kde_plasma_fix_locale ;;
             3) kde_plasma_reset ;;
-            ${#options[@]}) return 0 ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
         pause
