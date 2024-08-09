@@ -6,14 +6,17 @@ pkgbuild_menu() {
         return 1
     fi
 
-    local options=("Update parallel jobs" "Back to main menu")
+    local options=(
+        "Back to main menu"
+        "Update parallel jobs"
+    )
     while true; do
         show_menu "PKGBUILD Utils" "Utilities for PKGBUILD" "${options[@]}"
         choice=$?
 
         case $choice in
-            0) return 0 ;;
-            1) pkgbuild_update_parallel_jobs ;;
+            1) return 0 ;;
+            2) pkgbuild_update_parallel_jobs ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
 

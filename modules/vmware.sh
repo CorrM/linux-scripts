@@ -4,6 +4,7 @@
 # https://www.reddit.com/r/vmware/comments/1d2hzvs/unable_to_install_all_modules_error_while/
 # https://github.com/nan0desu/vmware-host-modules/wiki
 # https://gist.github.com/ddan9/daa3c1d3bce0eb879cd711d144712206
+# https://github.com/rune1979/ubuntu-vmmon-vmware-bash/blob/master/wm_autoupdate_key.sh
 
 # Menu function
 vmware_menu() {
@@ -12,17 +13,23 @@ vmware_menu() {
         return 1
     fi
 
-    local options=("Install VMWare" "Patch VMWare" "Add to DKMS" "Clean patch cache" "Back to main menu")
+    local options=(
+        "Back to main menu"
+        "Install VMWare"
+        "Patch VMWare"
+        "Add to DKMS"
+        "Clean patch cache"
+    )
     while true; do
         show_menu "VMWare Utils" "Utilities for VMWare" "${options[@]}"
         choice=$?
 
         case $choice in
-            0) return 0 ;;
-            1) vmware_install_vmware ;;
-            2) vmware_patch ;;
-            3) vmware_add_dkms ;;
-            4) vmware_clean_patch_cache ;;
+            1) return 0 ;;
+            2) vmware_install_vmware ;;
+            3) vmware_patch ;;
+            4) vmware_add_dkms ;;
+            5) vmware_clean_patch_cache ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
         pause
@@ -39,7 +46,7 @@ vmware_patch() {
 
     # Check if vmware-host-modules exists
     if [ ! -d "vmware-host-modules" ]; then
-    git clone https://github.com/nan0desu/vmware-host-modules.git
+        git clone https://github.com/nan0desu/vmware-host-modules.git
     fi
 
     cd vmware-host-modules
@@ -50,21 +57,33 @@ vmware_patch() {
         case $opt in
             "6.9.7+ kernels")
                 git checkout tmp/workstation-17.5.2-k6.9-sharishth
+                break
             ;;
 
             "6.9.1 and around")
                 git checkout tmp/workstation-17.5.2-k6.9.1
+                break
             ;;
         esac
     done
 
     # Compiling
-    make clean
-    make
+    sudo make clean
+    sudo make
     sudo make install
 
     # Providing tarballs to vmware's tool
-    make tarballs && cp -v vmmon.tar vmnet.tar /usr/lib/vmware/modules/source/ && vmware-modconfig --console --install-all
+    sudo make tarballs
+    sudo cp -v vmmon.tar vmnet.tar /usr/lib/vmware/modules/source/
+    sudo vmware-modconfig --console --install-all
+    sudo modprobe -v vmmon
+
+    print_color "$BLUE" "If that didnt work then make sure you installed kernal linux-header: (match your kernal)"
+    print_color "$BLUE" "\t- 'sudo pacman -S linux-headers'"
+    print_color "$BLUE" "\t- 'sudo pacman -S linux-cachyos-headers'"
+    print_color "$BLUE" "If you already have kernal linux-header and get any problem:"
+    print_color "$BLUE" "\t1. REINSTALL kernal linux-header again"
+    print_color "$BLUE" "\t2. re-run this script again"
 
     # Back to main folder
     cd ..

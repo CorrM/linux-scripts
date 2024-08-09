@@ -11,15 +11,19 @@ nvidia_menu() {
         return 1
     fi
 
-    local options=("Fix resume from suspend" "Maximize performance" "Back to main menu")
+    local options=(
+        "Back to main menu"
+        "Fix resume from suspend"
+        "Maximize performance"
+    )
     while true; do
         show_menu "NVIDIA Utils" "Utilities for NVIDIA GPUs" "${options[@]}"
         choice=$?
 
         case $choice in
-            0) return 0 ;;
-            1) nvidia_fix_resume_from_suspend ;;
-            2) nvidia_maximize_performance ;;
+            1) return 0 ;;
+            2) nvidia_fix_resume_from_suspend ;;
+            3) nvidia_maximize_performance ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
 

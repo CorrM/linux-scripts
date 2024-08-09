@@ -6,15 +6,19 @@ pacman_menu() {
         return 1
     fi
 
-    local options=("Update parallel downloads" "Enable color output" "Back to main menu")
+    local options=(
+        "Back to main menu"
+        "Update parallel downloads"
+        "Enable color output"
+    )
     while true; do
         show_menu "Pacman Utils" "Utilities for Pacman package manager" "${options[@]}"
         choice=$?
 
         case $choice in
-            0) return 0 ;;
-            1) pacman_update_parallel_downloads ;;
-            2) pacman_update_color_setting ;;
+            1) return 0 ;;
+            2) pacman_update_parallel_downloads ;;
+            3) pacman_update_color_setting ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
 

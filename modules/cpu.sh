@@ -6,14 +6,17 @@
 cpu_menu() {
     check_root
 
-    local options=("Enable AMD power-performance states" "Back to main menu")
+    local options=(
+        "Back to main menu"
+        "Enable AMD power-performance states"
+    )
     while true; do
         show_menu "CPU Utils" "Utilities for CPU" "${options[@]}"
         choice=$?
 
         case $choice in
-            0) return 0 ;;
-            1) cpu_enable_pstate ;;
+            1) return 0 ;;
+            2) cpu_enable_pstate ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
 
@@ -64,6 +67,6 @@ cpu_enable_pstate() {
             print_color "$RED" "Error: Updating GRUB configuration. Please run 'sudo update-grub' manually."
         fi
     else
-        print_color "$CYAN" "update-grub command not found. Please update your GRUB configuration manually."
+        print_color "$YELLOW" "update-grub command not found. Please update your GRUB configuration manually."
     fi
 }

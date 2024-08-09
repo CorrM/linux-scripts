@@ -9,16 +9,21 @@ sddm_menu() {
         return 1
     fi
 
-    local options=("Create default configuration" "Configure primary monitor" "Copy plasma config" "Back to main menu")
+    local options=(
+        "Back to main menu"
+        "Create default configuration"
+        "Configure primary monitor"
+        "Copy plasma config"
+    )
     while true; do
         show_menu "SDDM Utils" "Utilities for SDDM" "${options[@]}"
         choice=$?
 
         case $choice in
-            0) return 0 ;;
-            1) sddm_default_configuration ;;
-            2) sddm_configure_primary_monitor ;;
-            3) sddm_copy_plasma_config ;;
+            1) return 0 ;;
+            2) sddm_default_configuration ;;
+            3) sddm_configure_primary_monitor ;;
+            4) sddm_copy_plasma_config ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
         pause

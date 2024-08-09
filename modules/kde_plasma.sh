@@ -8,16 +8,20 @@ kde_plasma_menu() {
         return 1
     fi
 
-    local options=("Fast window preview" "Fix locale" "Back to main menu")
+    local options=(
+        "Back to main menu"
+        "Fast window preview"
+        "Fix locale"
+    )
     while true; do
         show_menu "KDE Plasma Utils" "Utilities for KDE Plasma" "${options[@]}"
         choice=$?
 
         case $choice in
-            0) return 0 ;;
-            1) kde_plasma_fast_window_preview ;;
-            2) kde_plasma_fix_locale ;;
-            3) kde_plasma_reset ;;
+            1) return 0 ;;
+            2) kde_plasma_fast_window_preview ;;
+            3) kde_plasma_fix_locale ;;
+            4) kde_plasma_reset ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
         pause

@@ -2,14 +2,17 @@
 
 # Menu function
 steam_menu() {
-    local options=("Fix MimeType" "Back to main menu")
+    local options=(
+        "Back to main menu"
+        "Fix MimeType"
+    )
     while true; do
         show_menu "Steam Utils" "Utilities for Steam" "${options[@]}"
         choice=$?
 
         case $choice in
-            0) return 0 ;;
-            1) steam_fix_mimetype ;;
+            1) return 0 ;;
+            2) steam_fix_mimetype ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
         pause

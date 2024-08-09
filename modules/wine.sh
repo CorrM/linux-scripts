@@ -13,16 +13,21 @@ wine_menu() {
         return 1
     fi
 
-    local options=("Install wine-tkg" "Fix WPF for default prefix" "Delete default prefix" "Back to main menu")
+    local options=(
+        "Back to main menu"
+        "Install wine-tkg"
+        "Fix WPF for default prefix"
+        "Delete default prefix"
+    )
     while true; do
         show_menu "Wine Utils" "Utilities for Wine" "${options[@]}"
         choice=$?
 
         case $choice in
-            0) return 0 ;;
-            1) wine_install_wine_tkg ;;
-            2) wine_fix_wpf_applications ;;
-            3) wine_delete_default_prefix ;;
+            1) return 0 ;;
+            2) wine_install_wine_tkg ;;
+            3) wine_fix_wpf_applications ;;
+            4) wine_delete_default_prefix ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
         pause

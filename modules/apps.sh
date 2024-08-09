@@ -7,16 +7,16 @@ apps_menu() {
     fi
 
     local options=(
-        "Install CoolerControl (CoolerControl is a feature-rich cooling device control application for Linux)"
         "Back to main menu"
+        "Install CoolerControl (CoolerControl is a feature-rich cooling device control application for Linux)"
     )
     while true; do
         show_menu "Applications Installer" "Collection of applications you can install" "${options[@]}"
         choice=$?
 
         case $choice in
-            0) return 0 ;;
-            1) apps_install_coolercontrol ;;
+            1) return 0 ;;
+            2) apps_install_coolercontrol ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
 

@@ -6,14 +6,17 @@ sound_menu() {
         return 1
     fi
 
-    local options=("Unmute all sound cards" "Back to main menu")
+    local options=(
+        "Back to main menu"
+        "Unmute all sound cards"
+    )
     while true; do
         show_menu "Sound Utils" "Utilities for sound" "${options[@]}"
         choice=$?
 
         case $choice in
-            0) return 0 ;;
-            1) sound_unmute_all_audio_cards ;;
+            1) return 0 ;;
+            2) sound_unmute_all_audio_cards ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
         pause
