@@ -19,6 +19,7 @@ source "$(dirname "$0")/modules/nvidia.sh"
 source "$(dirname "$0")/modules/gaming.sh"
 source "$(dirname "$0")/modules/wine.sh"
 source "$(dirname "$0")/modules/steam.sh"
+source "$(dirname "$0")/modules/docker.sh"
 
 # Main menu options
 options=(
@@ -34,6 +35,7 @@ options=(
     "Wine Utils"
     "Gaming Utils"
     "Steam Utils"
+    "Docker Utils"
     "Quit"
 )
 
@@ -57,6 +59,7 @@ main_menu() {
             10) wine_menu ;;
             11) gaming_menu ;;
             12) steam_menu ;;
+            13) docker_menu ;;
             ${#options[@]}) print_color "$YELLOW" "Thank you for using the CorrM Utils Tool. Goodbye!"; exit 0 ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac

@@ -49,9 +49,9 @@ nvidia_fix_resume_from_suspend() {
         print_color "$GREEN" "Created $conf_file with the required option."
     fi
 
-    systemctl enable nvidia-suspend.service
-    systemctl enable nvidia-hibernate.service
-    systemctl enable nvidia-resume.service
+    sudo systemctl enable nvidia-suspend.service
+    sudo systemctl enable nvidia-hibernate.service
+    sudo systemctl enable nvidia-resume.service
 
     print_color "$GREEN" "Resume from suspend fix applied."
 }
