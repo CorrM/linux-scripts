@@ -9,6 +9,8 @@ docker_menu() {
 
     local options=(
         "Back to main menu"
+        "Install docker"
+        "Install portainer CE"
         "Create docker group"
         "Fix docker folder premisions"
         "Start on boot"
@@ -25,18 +27,37 @@ docker_menu() {
         # TODO: Add rootless https://docs.docker.com/engine/security/rootless/
         case $choice in
             1) return 0 ;;
-            2) docker_create_group ;;
-            3) docker_fix_folder_permisions ;;
-            4) docker_start_on_boot ;;
-            5) docker_stop_on_boot ;;
-            6) docker_fast_image_build ;;
-            7) docker_nvidia_acceleration ;;
-            8) docker_test_nvidia_acceleration ;;
-            9) docker_get_ip_of_containers ;;
+            2) docker_install ;;
+            3) docker_portainer ;;
+            4) docker_create_group ;;
+            5) docker_fix_folder_permisions ;;
+            6) docker_start_on_boot ;;
+            7) docker_stop_on_boot ;;
+            8) docker_fast_image_build ;;
+            9) docker_nvidia_acceleration ;;
+            10) docker_test_nvidia_acceleration ;;
+            11) docker_get_ip_of_containers ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
         pause
     done
+}
+
+docker_install() {
+    print_color "$YELLOW" "Install docker and docker compose..."
+    sudo pacman -S docker docker-compose --noconfirm --needed
+}
+
+docker_portainer() {
+    if ! check_docker; then
+        print_color "$RED" "Docker should be installed."
+        return
+    fi
+    
+    print_color "$YELLOW" "Install Portainer CE..."
+    docker volume create portainer_data
+    docker run -d -p 8000:8000 -p 9443:9443 --name portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce
+    xdg-open https://localhost:9443
 }
 
 docker_create_group() {
@@ -106,11 +127,11 @@ docker_nvidia_acceleration() {
 docker_test_nvidia_acceleration() {
     print_color "$YELLOW" "Test nvidia GPU acceleration..."
 
-    sudo docker run --gpus all nvidia/cuda:12.6.0-runtime-ubuntu20.04 nvidia-smi
+    docker run --gpus all nvidia/cuda:12.6.0-runtime-ubuntu20.04 nvidia-smi
 }
 
 docker_get_ip_of_containers() {
-    print_color "$YELLOW" "Test nvidia GPU acceleration..."
+    print_color "$YELLOW" "Getting all containers IPs"
 
     for ID in $(docker ps -q | awk '{print $1}'); do
         IP=$(docker inspect --format="{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" "$ID")

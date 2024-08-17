@@ -96,13 +96,13 @@ check_yay() {
 
 # Check if git is installed
 check_git() {
-    check_command_with_error "git" "git -v"
+    check_command_with_error "Git" "git -v"
     return $?
 }
 
 # Check if xrandr command is available
 check_xrandr() {
-    check_command_with_error "xrandr" "xrandr" "pacman -S xorg-xrandr"
+    check_command_with_error "XRandr" "xrandr" "pacman -S xorg-xrandr"
     return $?
 }
 
@@ -114,12 +114,20 @@ check_alsa() {
 
 # Check if wine is installed
 check_wine() {
-    check_command_with_error "wine" "wine"
+    check_command_with_error "Wine" "wine"
     return $?
 }
 
 # Check if winetricks is installed
 check_winetricks() {
-    check_command_with_error "winetricks" "winetricks"
+    check_command_with_error "Winetricks" "winetricks"
     return $?
 }
+
+
+# Check if winetricks is installed
+check_docker() {
+    check_command_with_error "Docker" "docker --version"
+    return $?
+}
+
