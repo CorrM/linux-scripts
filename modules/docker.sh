@@ -13,6 +13,7 @@ docker_menu() {
         "Install portainer CE"
         "Create docker group"
         "Fix docker folder premisions"
+        "Allow host to permit connections from containers"
         "Start on boot"
         "Stop on boot"
         "Faster image build (overlay diff engine)"
@@ -31,12 +32,13 @@ docker_menu() {
             3) docker_portainer ;;
             4) docker_create_group ;;
             5) docker_fix_folder_permisions ;;
-            6) docker_start_on_boot ;;
-            7) docker_stop_on_boot ;;
-            8) docker_fast_image_build ;;
-            9) docker_nvidia_acceleration ;;
-            10) docker_test_nvidia_acceleration ;;
-            11) docker_get_ip_of_containers ;;
+            6) docker_allow_host_to_permit_connections ;; # https://stackoverflow.com/a/31328031/3351489
+            7) docker_start_on_boot ;;
+            8) docker_stop_on_boot ;;
+            9) docker_fast_image_build ;;
+            10) docker_nvidia_acceleration ;;
+            11) docker_test_nvidia_acceleration ;;
+            12) docker_get_ip_of_containers ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
         pause
@@ -73,6 +75,21 @@ docker_fix_folder_permisions() {
 
     sudo chown "$USER":"$USER" /home/"$USER"/.docker -R
     sudo chmod g+rwx "$HOME/.docker" -R
+}
+
+docker_allow_host_to_permit_connections() {
+    print_color "$YELLOW" "Allow host to permit connections from containers..."
+
+    sudo ip addr show docker0
+    sudo iptables -A INPUT -i docker0 -j ACCEPT
+
+    print_color "$BLUE" "Conseder using one of next options:"
+    print_color "$BLUE" "\t- '--add-host=host.docker.internal:host-gateway' in the docker run command."
+    print_color "$BLUE" "\t- 'extra_hosts: host.docker.internal:host-gateway' in the docker-compose."
+    print_color "$BLUE" "\t- '--net="host"' in the docker run command."
+    print_color "$BLUE" "\t- 'network_mode: "host"' in the docker-compose."
+
+    print_color "$GREEN" "Done."
 }
 
 docker_start_on_boot() {
