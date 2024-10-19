@@ -16,7 +16,7 @@ vmware_menu() {
     local options=(
         "Back to main menu"
         "Install VMWare"
-        "Patch VMWare"
+        "Patch VMWare / Fix VMWare"
         "Add to DKMS"
         "Clean patch cache"
     )
