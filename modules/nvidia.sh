@@ -4,6 +4,7 @@
 # https://github.com/devonkinghorn/linux-nvidia-dynamic-power-management-setup
 # https://www.reddit.com/r/hyprland/comments/1bjlije/comment/kvvdwot/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
 # https://www.youtube.com/watch?v=BH2Chn9N0z8
+# https://wiki.hyprland.org/Nvidia/#how-to-get-hyprland-to-possibly-work-on-nvidia
 
 nvidia_menu() {
     check_root
