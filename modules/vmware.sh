@@ -16,9 +16,10 @@ vmware_menu() {
     local options=(
         "Back to main menu"
         "Install VMWare"
-        "Patch VMWare / Fix VMWare"
+        "Patch VMWare / Fix VMWare (<=VMWare17.5)"
         "Add to DKMS"
         "Clean patch cache"
+        "Uninstall VMWare"
     )
     while true; do
         show_menu "VMWare Utils" "Utilities for VMWare" "${options[@]}"
@@ -30,6 +31,7 @@ vmware_menu() {
             3) vmware_patch ;;
             4) vmware_add_dkms ;;
             5) vmware_clean_patch_cache ;;
+            6) vmware_uninstall ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
         pause
@@ -38,7 +40,7 @@ vmware_menu() {
 
 vmware_install_vmware() {
     print_color "$YELLOW" "Installing VMWare..."
-    sh VMware-Workstation-Full-17.5.2-23775571.x86_64.bundle --eulas-agreed
+    sh VMware-Workstation-Full-17.6.3-24583834.x86_64.bundle --eulas-agreed
 }
 
 vmware_patch() {
@@ -118,5 +120,18 @@ vmware_clean_patch_cache() {
       rm -rf vmware-host-modules
     else
       echo "Aborted."
+    fi
+}
+
+vmware_uninstall() {
+    print_color "$YELLOW" "Uninstalling VMWare..."
+    print_color "$CYAN" "Are you sure you want to uninstall VMWare? (y/n)"
+    read -r confirmation
+
+    if [ "$confirmation" = "y" ]; then
+        sudo vmware-installer -u vmware-workstation
+        print_color "$GREEN" "VMWare has been uninstalled."
+    else
+        print_color "$BLUE" "Uninstall aborted."
     fi
 }
