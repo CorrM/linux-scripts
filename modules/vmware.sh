@@ -19,6 +19,7 @@ vmware_menu() {
         "Patch VMWare / Fix VMWare (<=VMWare17.5)"
         "Add to DKMS"
         "Clean patch cache"
+        "Fix VMWare Network Problems"
         "Uninstall VMWare"
     )
     while true; do
@@ -31,7 +32,8 @@ vmware_menu() {
             3) vmware_patch ;;
             4) vmware_add_dkms ;;
             5) vmware_clean_patch_cache ;;
-            6) vmware_uninstall ;;
+            6) vmware_fix_network ;;
+            7) vmware_uninstall ;;
             *) print_color "$RED" "Invalid option. Please try again." ;;
         esac
         pause
@@ -121,6 +123,12 @@ vmware_clean_patch_cache() {
     else
       echo "Aborted."
     fi
+}
+
+vmware_fix_network() {
+    print_color "$YELLOW" "Fixing VMWare network problems..."
+    sudo systemctl enable --now vmware-networks
+    print_color "$GREEN" "VMWare network service has been enabled and started."
 }
 
 vmware_uninstall() {
