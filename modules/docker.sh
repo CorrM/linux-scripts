@@ -86,8 +86,8 @@ docker_allow_host_to_permit_connections() {
     print_color "$BLUE" "Conseder using one of next options:"
     print_color "$BLUE" "\t- '--add-host=host.docker.internal:host-gateway' in the docker run command."
     print_color "$BLUE" "\t- 'extra_hosts: host.docker.internal:host-gateway' in the docker-compose."
-    print_color "$BLUE" "\t- '--net="host"' in the docker run command."
-    print_color "$BLUE" "\t- 'network_mode: "host"' in the docker-compose."
+    print_color "$BLUE" "\t- '--net=host' in the docker run command then use 'localhost'."
+    print_color "$BLUE" "\t- 'network_mode: host' in the docker-compose then use 'localhost'."
 
     print_color "$GREEN" "Done."
 }
